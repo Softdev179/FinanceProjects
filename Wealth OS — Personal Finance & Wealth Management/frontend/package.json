@@ -1,1 +1,1 @@
-{"name":"wealth-dashboard","private":true,"version":"0.1.0","type":"module","scripts":{"dev":"vite","build":"vite"},"dependencies":{"@vitejs/plugin-react":"latest","vite":"latest","react":"latest","react-dom":"latest"},"devDependencies":{}}
+{"name":"wealth-dashboard","private":true,"version":"0.1.0","type":"module","scripts":{"dev":"node ./node_modules/vite/bin/vite.js","build":"node ./node_modules/vite/bin/vite.js build"},"dependencies":{"@vitejs/plugin-react":"latest","vite":"latest","react":"latest","react-dom":"latest"},"devDependencies":{}}
