@@ -1,0 +1,5 @@
+package com.payflow.config;
+import com.payflow.payment.*; import com.payflow.auth.*; import org.springframework.security.crypto.password.PasswordEncoder; import org.springframework.boot.CommandLineRunner; import org.springframework.context.annotation.Bean; import org.springframework.context.annotation.Configuration; import java.math.BigDecimal; import java.util.*;
+@Configuration public class DemoData {
+ @Bean CommandLineRunner seed(PaymentService service,PaymentRepository repo,MerchantUserRepository users,PasswordEncoder encoder){return args->{if(!users.existsByEmailIgnoreCase("demo@payflow.local"))users.save(new MerchantUser("demo@payflow.local",encoder.encode("Demo@12345"),"Acme Commerce","merchant_demo"));if(repo.count()>0)return;var methods=List.of("card","upi","netbanking","wallet");for(int i=0;i<18;i++){var p=service.create("demo-key-"+i,new PaymentRequest("merchant_demo",BigDecimal.valueOf(499+(i*137)%5000),"INR",methods.get(i%4),"Demo order #"+(1000+i),"customer"+i+"@example.com"));p=service.authorize(p.getId(),i%5!=0);if(p.getStatus()==PaymentStatus.AUTHORIZED)service.capture(p.getId());}};}
+}
