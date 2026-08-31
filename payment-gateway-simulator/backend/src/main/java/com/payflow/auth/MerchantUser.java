@@ -1,0 +1,7 @@
+package com.payflow.auth;
+import jakarta.persistence.*; import java.time.Instant; import java.util.UUID;
+@Entity @Table(name="merchant_users",uniqueConstraints=@UniqueConstraint(columnNames="email")) public class MerchantUser {
+ @Id private String id; @Column(nullable=false,unique=true) private String email; @Column(nullable=false) private String passwordHash; @Column(nullable=false,unique=true) private String merchantId; @Column(nullable=false) private String businessName; @Column(nullable=false) private String role="MERCHANT"; @Column(nullable=false) private Instant createdAt=Instant.now();
+ protected MerchantUser(){} public MerchantUser(String email,String passwordHash,String businessName){this(email,passwordHash,businessName,"merchant_"+UUID.randomUUID().toString().replace("-","").substring(0,12));} public MerchantUser(String email,String passwordHash,String businessName,String merchantId){id="usr_"+UUID.randomUUID().toString().replace("-","").substring(0,18);this.email=email.toLowerCase();this.passwordHash=passwordHash;this.businessName=businessName;this.merchantId=merchantId;}
+ public String getId(){return id;} public String getEmail(){return email;} public String getPasswordHash(){return passwordHash;} public String getMerchantId(){return merchantId;} public String getBusinessName(){return businessName;} public String getRole(){return role;} public Instant getCreatedAt(){return createdAt;}
+}
